@@ -9,7 +9,7 @@
 }
 
 .content-container{
-   /* margin-top: 80px; */
+   margin-top: 110px;
    /* background-color: #1e1b1b; */
    display:flex;
 }
@@ -117,4 +117,19 @@
    color: #09529b !important;
  } */
 
+
+ .clear-button{
+    position: absolute;
+    cursor: pointer;
+    transform: translate(-50%);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    right: 1px;
+    top: 8px;
+ }
  
+

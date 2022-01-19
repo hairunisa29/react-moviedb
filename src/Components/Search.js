@@ -5,7 +5,7 @@ import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import SearchList from './SearchList';
-import { Route, Switch } from "react-router-dom";
+import { Route, useNavigate, Routes } from "react-router-dom";
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -54,6 +54,7 @@ const Search = styled('div')(({ theme }) => ({
 
 
 function SearchField(){
+    let navigate = useNavigate();
     const [searchField, setSearchField] = useState('');
     const [searchShow, setSearchShow] = useState(false);
     const [result, setResult] = useState([]);
@@ -66,25 +67,20 @@ function SearchField(){
       }
       else {
         setSearchShow(true);
+        
       }
+      
     };
-
-
-    const searchHandler = async() => {
-      await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchField}&page=1&include_adult=false`).then(res => {
-        console.log(res.data.results)
-        setResult(res.data.results)
-      })
-  }
 
 
     function searchList() {
       if (searchShow) {
         return (
           <>
-            <Route exact path="/search">
-              <SearchList result={result}/>
-            </Route>
+            <Routes>
+              <Route path="/search" element={<SearchList result={result}/>}/>
+            </Routes>
+            
           </>
           
 
@@ -93,10 +89,21 @@ function SearchField(){
     }
 
 
+    const searchHandler = async() => {
+      await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchField}&page=1&include_adult=false`).then(res => {
+        // console.log(res.data.results)
+        setResult(res.data.results)
+        navigate('/search')
+      })
+          
+  }
+
+
+
+
     return(
         <>
             <Search>
-                
                     <Button
                       onClick={searchHandler}
                       type='button'
@@ -111,9 +118,10 @@ function SearchField(){
                     onChange={handleChange}
                     value={searchField}
                 />
+                
             </Search>
             {searchList()}
-        </> 
+        </>
         
     )
 

@@ -1,12 +1,9 @@
 import * as React from 'react';
 import {Box, Card, Button, CardMedia, CardContent, CardActionArea, Grid, Typography, Modal} from '@mui/material';
 import {makeStyles} from "@mui/styles";
-import {img_300} from "../Config/Config";
+import {img_500, noPicture} from "../Config/Config";
 import StarRateIcon from '@mui/icons-material/StarRate';
 import ModalPopUp from './Modal';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 
 
@@ -16,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
+        margin: '5px',
     },
     cardMedia: {
         paddingTop: '56.25%', // 16:9
     },
     cardContent: {
         flexGrow: 1,
+        height: '115px',
     },
 }));
 
@@ -33,34 +32,44 @@ function Cards({content, id}) {
 
     return(
         <>
-            <Grid item key={content.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
+            {/* <Grid item key={content.id} xs={12} sm={6} md={4}> */}
+                
+                    <Card className={classes.card}>
                     <CardActionArea onClick={handleOpen}>
                         <CardMedia
                             component="img"
-                            image={img_300+content.poster_path}
-                            alt={content.title}
+                            image={content.poster_path? img_500+content.poster_path : noPicture}
+                            alt={content.title? content.title : content.name}
                         />
                         <CardContent className={classes.cardContent}>
-                            <Typography gutterBottom variant="h7" component="div"  style={{fontWeight:'bold'}}>
+                            {/* <Typography gutterBottom component="div"  style={{fontWeight:'bold', fontSize:'10pt', textAlign:'left'}}>
                                 {content.title}
-                            </Typography>
-                            
-                            
-                            <span style={{ display: 'inline-flex' }}>
-                                <StarRateIcon
-                                    style={{color:'#ffd966', fontSize:'14pt'}}
-                                />
-                                <Typography gutterBottom component="div" style={{fontSize:'11pt'}}>
-                                    {content.vote_average}
-                                </Typography>     
-                            </span>
-                                        
-
-                            
+                            </Typography> */}
+                            <div className='row'>
+                                <div className='col-9'>
+                                    <Typography gutterBottom component="div"  style={{fontWeight:'bold', fontSize:'10pt', textAlign:'left'}}>
+                                        {content.title ? content.title : content.name}
+                                    </Typography>
+                                </div>
+                                <div className='col-3'>
+                                    <span style={{ display: 'inline-flex' }}>
+                                        <StarRateIcon style={{color:'#ffd966', fontSize:'12pt', textAlign:'left'}}/>
+                                        <Typography gutterBottom component="div" style={{fontSize:'9pt', textAlign:'left'}}>
+                                            {content.vote_average}
+                                        </Typography>  
+                                    </span>
+                                </div>
+                            </div>
                         </CardContent>
                     </CardActionArea>
                 </Card>
+                
+                
+
+                
+                
+
+
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -75,7 +84,7 @@ function Cards({content, id}) {
                     </div>
                 </Modal>
                 
-            </Grid>
+            {/* </Grid> */}
             
             
         </>

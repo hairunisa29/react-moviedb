@@ -11,12 +11,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 const useStyles = makeStyles((theme) => ({
     card: {
-        height: '130px',
+        height: '100%',
         display: 'flex',
-        
         flexDirection: 'column',
         borderRadius: '5px',
-        p:4
     },
     cardMedia: {
         paddingTop: '56.25%', // 16:9
@@ -29,15 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Cast({id}){
+function Cast({id, media_type}){
     const classes = useStyles();
     const [credits, setCredits] = useState([]);
 
     var settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
-        slidesToShow: 5,
+        slidesToShow: 4,
         slidesToScroll: 1
       };
 
@@ -47,7 +45,7 @@ function Cast({id}){
 
     useEffect(()=>{
         console.log('useEffect')
-        axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(res => {
+        axios.get(`https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(res => {
             let result=res.data.cast;
             console.log(result);
             setCredits(result);
@@ -69,7 +67,7 @@ function Cast({id}){
                                         component="img"
                                         image={cast.profile_path ? `${img_154}${cast.profile_path}` : noPicture}
                                         alt={cast.name}
-                                        style={{maxHeight:'130px'}}
+                                        style={{maxHeight:'150px'}}
                                         className='image-row'
                                     />
                                     <Box

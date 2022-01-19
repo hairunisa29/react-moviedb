@@ -2,8 +2,7 @@ import * as React from 'react';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Box, Card, Button, CardMedia, CardContent, Typography, Modal} from '@mui/material';
-import {img_154} from "../Config/Config";
-import {img_500} from "../Config/Config";
+import {img_154, img_500, unavailableLandscape} from "../Config/Config";
 import Cast from './Cast';
 import {makeStyles} from "@mui/styles";
 import '../Layout/style/style.css';
@@ -26,13 +25,13 @@ const style = {
 
 
 
-export default function ModalPopUp({open, handleClose, id, content}) {
+export default function ModalPopUp({id, content}) {
   // const classes = useStyles();
   const [genres, setGenres] = useState([]);
   
 
   useEffect(()=>{
-    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(response => {
+    axios.get(`https://api.themoviedb.org/3/${content.media_type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then(response => {
     let results=response.data.genres
     setGenres(results)
   })
@@ -48,7 +47,7 @@ export default function ModalPopUp({open, handleClose, id, content}) {
                   component="img"
                   alt="green iguana"
                   height="250"
-                  image={img_500+content.backdrop_path}
+                  image={content.backdrop_path ? img_500+content.backdrop_path : unavailableLandscape}
                 />
               {/* <img src={img_500+content.backdrop_path} style={{borderRadius:'10px'}}/> */}
               <Box
@@ -64,10 +63,10 @@ export default function ModalPopUp({open, handleClose, id, content}) {
               >
                 <CardContent>
                   <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {content.title}
+                    {content.title ? content.title : content.name}
                   </Typography>
                   <Typography style={{fontSize:'10pt'}} className='modal-movie-detail'>
-                    Release Date: {content.release_date}
+                    Release Date: {content.release_date ? content.release_date : content.first_air_date}
                   </Typography>
                 </CardContent>
               </Box>
@@ -105,13 +104,13 @@ export default function ModalPopUp({open, handleClose, id, content}) {
               
               
             
-            <Box style={{paddingRight:'25px', paddingLeft:'25px'}}>
+            <Box style={{paddingRight:'30px', paddingLeft:'30px'}}>
               <Typography className="movie-detail-title" style={{fontWeight:'bold'}}>
                 Cast
               </Typography> 
               <Cast
                 id={id}
-                content={content}
+                media_type={content.media_type}
               />
             </Box>
             

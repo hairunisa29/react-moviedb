@@ -3,24 +3,22 @@ import Header from './Layout/Header';
 import BottomNav from './Layout/BottomNav';
 import { Container } from '@mui/material';
 import { Route, Routes } from "react-router-dom";
-import Trending from './Components/Trending';
-import Movies from './Components/Movies';
-import SearchList from './Components/SearchList';
-
+import Base from './Layout/Base'
 
 
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Base/>
+      {/* <Header/>
       <Container>
-        {/* <Routes>
-          <Route path="/trending" element={<Trending/>} exact/>
+        <Routes>
+          <Route path="/trending" element={<Trending/>}/>
           <Route path="/movies" element={<Movies/>} />
           <Route path="/search" element={<SearchList/>} />
-        </Routes> */}
+        </Routes>
       </Container>
-      <BottomNav/>
+      <BottomNav/> */}
     </div>
   );
 }

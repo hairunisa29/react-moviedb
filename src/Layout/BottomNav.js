@@ -15,20 +15,19 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
-  const history = useHistory();
-
+  let navigate = useNavigate();
   useEffect(()=>{
     if (value === 0) {
-      history.push('/trending');
+      navigate('/trending');
     }
     else if(value === 1){
-      history.push('/movies');
+      navigate('/movies');
     }
   }, [value])
   

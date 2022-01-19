@@ -11,6 +11,7 @@ function Movies(){
                     variant="h4"
                     align="center"
                     color="textPrimary"
+                    marginTop='80px'
                     gutterBottom
                 >
                     Movies
